@@ -1,5 +1,5 @@
 import random 
-from game.utils.constants import SCREEN_WIDTH
+from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, BULLET_ENEMY_TPE
 
 class Enemy:
     X_POS_LIST = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
@@ -8,6 +8,7 @@ class Enemy:
     RIGHT = "right"
     MOVE_X = [LEFT, RIGHT]
     INTERVAL = 100
+    SHOOTING_TIME = 30
 
 
     def __init__(self, image, speed_x, speed_y):
@@ -19,9 +20,21 @@ class Enemy:
           self.index = 0
           self.speed_x = speed_x
           self.speed_y = speed_y
+          self.is_alive = True 
+          self.shooting_time= 0
 
     
-    def update (self):
+    def update (self, bullet_handler):
+         if self.rect.y >= SCREEN_HEIGHT:
+              self.is_alive = False
+         self.shooting_time += 1
+         self.move()
+         self.shoot(bullet_handler)
+    
+    def draw(self, screen):
+         screen.blit(self.image, self.rect)
+
+    def move(self):
          self.rect.y += self.speed_y
          if self.MOVE_X == self.LEFT:
               self.rect.x -= self.speed_x
@@ -35,7 +48,12 @@ class Enemy:
                    self.MOVE_X = self.LEFT
                    self.index = 0
               self.index += 1
-    
-    def draw(self, screen):
-         screen.blit(self.image, self.rect)
+
+    def shoot(self, bullet_handler):
+         if self.shooting_time % self.SHOOTING_TIME == 0:
+              bullet_handler.add_bullet(BULLET_ENEMY_TPE, self.rect.center)
+              
+         
+         
+         
          

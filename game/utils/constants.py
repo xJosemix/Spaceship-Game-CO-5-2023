@@ -29,3 +29,5 @@ ENEMY_1 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_1.png"))
 ENEMY_2 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_2-removebg-preview.png"))
 
 FONT_STYLE = 'freesansbold.ttf'
+BULLET_ENEMY_TPE = 'enemy'
+BULLET_USER_TPE = 'user'
